@@ -1,7 +1,19 @@
+# fastapi
+# uvicorn
+# python-dotenv
+# supabase
+# PyJWT
+# razorpay
+# requests
+
+
 fastapi
-uvicorn
+uvicorn[standard]
+gunicorn
 python-dotenv
 supabase
 PyJWT
 razorpay
 requests
+ultralytics
+opencv-python-headless

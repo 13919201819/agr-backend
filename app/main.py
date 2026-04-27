@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from app.api import auth, drones, dashboard
 from app.api import test
-from app.api import auth
 from app.api import users
 from app.api import procurement
 from app.api import catalog
@@ -19,7 +18,6 @@ app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(drones.router, prefix="/drones", tags=["Drones"])
 app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
 app.include_router(test.router)
-app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(users.router, prefix="/users", tags=["Users"])
 app.include_router(procurement.router, prefix="/procurement", tags=["Procurement"])
 app.include_router(catalog.router, prefix="/catalog", tags=["Catalog"])
