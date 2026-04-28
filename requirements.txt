@@ -11,8 +11,8 @@ fastapi
 uvicorn[standard]
 gunicorn
 python-dotenv
-supabase
-PyJWT
+supabase==2.4.5
+httpx==0.27.0PyJWT
 razorpay
 requests
 ultralytics

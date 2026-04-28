@@ -8,10 +8,6 @@ from app.api import stream, websocket
 from app.api import video
 from app.api import logs
 
-
-
-
-
 app = FastAPI(title="Agrani Backend")
 
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])

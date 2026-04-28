@@ -1,23 +1,24 @@
-# Step 1: Use a small Python base
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-# Step 2: Install system libraries for OpenCV/YOLO
-# Swapped libgl1-mesa-glx for libgl1 and added libglib2.0-0
+# Install system dependencies for OpenCV
 RUN apt-get update && apt-get install -y \
     libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+# Set WORKDIR to root so 'app.main' is discoverable as a module
+WORKDIR /
 
-# Step 3: Install Python dependencies (CPU-optimized)
 COPY requirements.txt .
+
+# Install with --no-cache-dir to keep the image slim
 RUN pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu \
-    torch torchvision ultralytics fastapi uvicorn gunicorn
+    torch torchvision ultralytics fastapi uvicorn[standard] gunicorn python-dotenv supabase PyJWT razorpay requests opencv-python-headless
 
-# Step 4: Copy your code
-COPY . .
+# Copy your local folder into a folder named /app inside the container
+COPY . /app
 
-# Step 5: Start the server on Port 80
 EXPOSE 80
+
+# Run using the module path
 CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:80"]
