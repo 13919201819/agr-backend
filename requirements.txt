@@ -7,14 +7,27 @@
 # requests
 
 
+# fastapi
+# uvicorn[standard]
+# gunicorn
+# python-dotenv
+# supabase==2.4.5
+# httpx==0.27.0PyJWT
+# razorpay
+# requests
+# ultralytics
+# opencv-python-headless
+# passlib[bcrypt]
+
 fastapi
 uvicorn[standard]
 gunicorn
 python-dotenv
-supabase==2.4.5
-httpx==0.27.0PyJWT
+supabase
+PyJWT
 razorpay
 requests
 ultralytics
 opencv-python-headless
+bcrypt
 passlib[bcrypt]
