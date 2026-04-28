@@ -1,27 +1,23 @@
-# Step 1: Use a small Python base
 FROM python:3.12-slim
 
-# Step 2: Install system libraries for OpenCV/YOLO
+# Install system dependencies for OpenCV/YOLO
 RUN apt-get update && apt-get install -y \
     libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Step 3: Set WORKDIR to root (/) NOT (/app)
+# Set WORKDIR to root (/) so 'app.main' works as a module
 WORKDIR /
 
-# Step 4: Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cpu \
-    torch torchvision ultralytics fastapi uvicorn[standard] gunicorn python-dotenv supabase PyJWT razorpay requests opencv-python-headless
+    torch torchvision ultralytics fastapi "uvicorn[standard]" gunicorn python-dotenv supabase PyJWT razorpay requests opencv-python-headless
 
-# Step 5: Copy your whole project into a folder named 'app'
-# This creates the structure /app/main.py and /app/api/
+# Copy everything into the 'app' folder
 COPY . /app
 
-# Step 6: Expose port 80
 EXPOSE 80
 
-# Step 7: Start the server
-# By running from /, 'app.main:app' will correctly find the /app folder
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--bind", "0.0.0.0:80"]
+# FORCE the host and port here. 
+# We use 'app.main:app' because your file is in app/main.py and the object is named app.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
