@@ -2,8 +2,9 @@
 FROM python:3.11-slim
 
 # Step 2: Install system libraries for OpenCV/YOLO
+# Swapped libgl1-mesa-glx for libgl1 and added libglib2.0-0
 RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
+    libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
@@ -16,8 +17,6 @@ RUN pip install --no-cache-dir --extra-index-url https://download.pytorch.org/wh
 
 # Step 4: Copy your code
 COPY . .
-
-##
 
 # Step 5: Start the server on Port 80
 EXPOSE 80
