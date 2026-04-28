@@ -17,4 +17,4 @@ razorpay
 requests
 ultralytics
 opencv-python-headless
-bcrypt
+passlib[bcrypt]
